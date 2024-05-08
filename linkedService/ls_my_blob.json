@@ -1,0 +1,12 @@
+{
+	"name": "ls_my_blob",
+	"properties": {
+		"description": "this linked service is used to link your own storage blob and this linked service will used for both pipelines.",
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://sdacapstoneproject.blob.core.windows.net/",
+			"accountKind": "StorageV2"
+		}
+	}
+}
