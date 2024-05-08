@@ -2,6 +2,9 @@
 	"name": "copyOnceWeek",
 	"properties": {
 		"description": "For this pipeline,It will be used to copy data once a week",
+		"folder": {
+			"name": "capstone-project"
+		},
 		"annotations": []
 	}
 }
