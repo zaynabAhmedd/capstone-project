@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "capstone-project-DS"
+			"name": "DS-Source"
 		},
 		"annotations": [],
 		"type": "PostgreSqlV2Table",
