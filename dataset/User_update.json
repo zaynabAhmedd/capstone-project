@@ -1,0 +1,26 @@
+{
+	"name": "User_update",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_my_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS-Destination"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "ExtractedData/Users",
+				"container": "bd-project"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
