@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "For this pipeline, will be used for copy daily Posts parquet files from WCD's public blob storage to our storage",
 		"folder": {
-			"name": "capstone-project"
+			"name": "capstone-project-pipelines"
 		},
 		"annotations": []
 	}
