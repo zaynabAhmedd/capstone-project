@@ -267,7 +267,14 @@
 						"name": "Copy data posttype",
 						"description": "copy table from the Postgres",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Delete posttype table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -320,7 +327,14 @@
 						"name": "Copy data users",
 						"description": "copy table from the Postgres",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Delete users tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -368,6 +382,74 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Delete posttype table",
+						"description": "Delete the posttype tables so that they are not repeated every time they are updated",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Posttyp_d",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "ls_my_blob",
+									"type": "LinkedServiceReference"
+								},
+								"path": "bd-project/ExtractedData/delete"
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					},
+					{
+						"name": "Delete users tables",
+						"description": "Delete the users tables so that they are not repeated every time they are updated",
+						"type": "Delete",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "User_d",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "ls_my_blob",
+									"type": "LinkedServiceReference"
+								},
+								"path": "bd-project/ExtractedData/delete"
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
 					}
 				],
 				"policy": {
@@ -382,7 +464,8 @@
 				"[concat(variables('factoryId'), '/datasets/postTypes_s')]",
 				"[concat(variables('factoryId'), '/datasets/Posttyp_d')]",
 				"[concat(variables('factoryId'), '/datasets/Users_s')]",
-				"[concat(variables('factoryId'), '/datasets/User_d')]"
+				"[concat(variables('factoryId'), '/datasets/User_d')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_my_blob')]"
 			]
 		},
 		{
