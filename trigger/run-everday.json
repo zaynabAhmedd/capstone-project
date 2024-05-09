@@ -1,0 +1,26 @@
+{
+	"name": "run-everday",
+	"properties": {
+		"description": "copy data everyday",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copyPostsEveryday",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2024-05-09T13:30:00",
+				"endTime": "2024-05-09T16:30:00",
+				"timeZone": "Arab Standard Time"
+			}
+		}
+	}
+}
