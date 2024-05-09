@@ -1,5 +1,5 @@
 {
-	"name": "Post_update",
+	"name": "Post_d",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_my_blob",

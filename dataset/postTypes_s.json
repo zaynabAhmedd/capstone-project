@@ -1,5 +1,5 @@
 {
-	"name": "postTypes",
+	"name": "postTypes_s",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_rds_pg",

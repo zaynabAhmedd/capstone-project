@@ -1,5 +1,5 @@
 {
-	"name": "User_update",
+	"name": "User_d",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_my_blob",

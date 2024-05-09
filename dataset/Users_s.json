@@ -1,5 +1,5 @@
 {
-	"name": "Users",
+	"name": "Users_s",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_rds_pg",

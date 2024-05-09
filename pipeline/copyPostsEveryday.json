@@ -49,13 +49,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Posts",
+						"referenceName": "Posts_s",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Post_update",
+						"referenceName": "Post_d",
 						"type": "DatasetReference"
 					}
 				]
