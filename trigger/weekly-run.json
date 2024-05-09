@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "copy data every week",
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
