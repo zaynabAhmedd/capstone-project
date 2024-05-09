@@ -17,7 +17,6 @@
 				"frequency": "Minute",
 				"interval": 5,
 				"startTime": "2024-05-09T10:30:00",
-				"endTime": "2024-05-09T15:00:00",
 				"timeZone": "Arab Standard Time"
 			}
 		}
