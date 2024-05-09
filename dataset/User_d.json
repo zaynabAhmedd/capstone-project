@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "rds-users.csv",
 				"folderPath": "ExtractedData/Users",
 				"container": "bd-project"
 			},
