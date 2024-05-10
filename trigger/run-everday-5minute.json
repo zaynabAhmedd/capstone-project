@@ -1,0 +1,26 @@
+{
+	"name": "run-everday-5minute",
+	"properties": {
+		"description": "this will copy the data Every day in every 5 minutes",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copyPostsEveryday",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2024-05-16T10:00:00",
+				"endTime": "2024-05-17T11:00:00",
+				"timeZone": "Arab Standard Time"
+			}
+		}
+	}
+}
