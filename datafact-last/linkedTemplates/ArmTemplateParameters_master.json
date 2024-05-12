@@ -5,11 +5,17 @@
 		"factoryName": {
 			"value": "datafact-last"
 		},
+		"ls_db_ml_post_accessToken": {
+			"value": ""
+		},
 		"ls_rds_pg_password": {
 			"value": ""
 		},
 		"ls_wcd_blob_connectionString": {
 			"value": ""
+		},
+		"ls_db_ml_post_properties_typeProperties_existingClusterId": {
+			"value": "0511-085359-y3wdvsrq"
 		},
 		"ls_my_blob_properties_typeProperties_serviceEndpoint": {
 			"value": "https://sdacapstoneproject.blob.core.windows.net/"

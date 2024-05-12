@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "datafact-last"
 		},
+		"ls_db_ml_post_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_db_ml_post'"
+		},
 		"ls_rds_pg_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_rds_pg'"
@@ -14,6 +18,10 @@
 		"ls_wcd_blob_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_wcd_blob'"
+		},
+		"ls_db_ml_post_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0511-085359-y3wdvsrq"
 		},
 		"ls_my_blob_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
@@ -36,6 +44,25 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_db_ml_post')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "link to azure databricks",
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-3473923519273648.8.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('ls_db_ml_post_accessToken')]"
+					},
+					"existingClusterId": "[parameters('ls_db_ml_post_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ls_my_blob')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -678,6 +705,34 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "run ML Analysis",
+						"description": "run ML model on posts files",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Copy post files",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/zaynab.alshhry@gmail.com/ML Sentiment Analysis"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_db_ml_post",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -691,7 +746,40 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Post_d')]",
 				"[concat(variables('factoryId'), '/datasets/Posts_s')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_db_ml_post')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_my_blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/run-everday-5minute')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "this will copy the data Every day in every 5 minutes",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyPostsEveryday",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 5,
+						"startTime": "2024-05-16T10:00:00",
+						"endTime": "2024-05-17T11:00:00",
+						"timeZone": "Arab Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]"
 			]
 		},
 		{
@@ -728,38 +816,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/run-everday-5minute')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "this will copy the data Every day in every 5 minutes",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "copyPostsEveryday",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 5,
-						"startTime": "2024-05-16T10:00:00",
-						"endTime": "2024-05-17T11:00:00",
-						"timeZone": "Arab Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]"
 			]
 		}
 	]

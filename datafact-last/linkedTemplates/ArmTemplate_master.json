@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "datafact-last"
 		},
+		"ls_db_ml_post_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_db_ml_post'"
+		},
 		"ls_rds_pg_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_rds_pg'"
@@ -14,6 +18,10 @@
 		"ls_wcd_blob_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_wcd_blob'"
+		},
+		"ls_db_ml_post_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0511-085359-y3wdvsrq"
 		},
 		"ls_my_blob_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
@@ -58,11 +66,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ls_db_ml_post_accessToken": {
+						"value": "[parameters('ls_db_ml_post_accessToken')]"
+					},
 					"ls_rds_pg_password": {
 						"value": "[parameters('ls_rds_pg_password')]"
 					},
 					"ls_wcd_blob_connectionString": {
 						"value": "[parameters('ls_wcd_blob_connectionString')]"
+					},
+					"ls_db_ml_post_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_db_ml_post_properties_typeProperties_existingClusterId')]"
 					},
 					"ls_my_blob_properties_typeProperties_serviceEndpoint": {
 						"value": "[parameters('ls_my_blob_properties_typeProperties_serviceEndpoint')]"
