@@ -1,0 +1,20 @@
+{
+	"name": "Users_s",
+	"properties": {
+		"description": "users table from RDS",
+		"linkedServiceName": {
+			"referenceName": "ls_rds_pg",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "datasets-source"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "raw_st",
+			"table": "users"
+		}
+	}
+}

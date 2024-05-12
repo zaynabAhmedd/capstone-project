@@ -1,0 +1,20 @@
+{
+	"name": "postTypes_s",
+	"properties": {
+		"description": "postTypes table from RDS",
+		"linkedServiceName": {
+			"referenceName": "ls_rds_pg",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "datasets-source"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "raw_st",
+			"table": "posttypes"
+		}
+	}
+}

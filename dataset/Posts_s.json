@@ -1,0 +1,23 @@
+{
+	"name": "Posts_s",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_wcd_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "datasets-source"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Posts_today",
+				"container": "de-project-st"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
