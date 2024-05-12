@@ -2,6 +2,9 @@
 	"name": "copyPostsEveryday",
 	"properties": {
 		"description": "Copy data every day from Post",
+		"folder": {
+			"name": "capstone-project-pipelines"
+		},
 		"annotations": []
 	}
 }
