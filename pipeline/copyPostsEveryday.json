@@ -1,0 +1,7 @@
+{
+	"name": "copyPostsEveryday",
+	"properties": {
+		"description": "Copy data every day from Post",
+		"annotations": []
+	}
+}

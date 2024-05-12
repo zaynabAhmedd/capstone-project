@@ -1,0 +1,7 @@
+{
+	"name": "copyOnceWeek",
+	"properties": {
+		"description": "Copy data once a week",
+		"annotations": []
+	}
+}
