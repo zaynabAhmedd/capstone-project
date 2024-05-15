@@ -756,6 +756,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "MASTER",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -768,17 +775,18 @@
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								43
+								10
 							],
 							"hours": [
-								14
+								15
 							]
 						}
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]"
+				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
+				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
 			]
 		},
 		{
