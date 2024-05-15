@@ -826,6 +826,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "MASTER",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -837,10 +844,10 @@
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								38
+								0
 							],
 							"hours": [
-								14
+								11
 							],
 							"weekDays": [
 								"Wednesday"
@@ -850,7 +857,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]"
+				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]",
+				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
 			]
 		},
 		{
