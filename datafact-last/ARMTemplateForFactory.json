@@ -742,7 +742,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/run-everday-5minute')]",
+			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -761,11 +761,19 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Minute",
-						"interval": 5,
-						"startTime": "2024-05-17T10:00:00",
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2024-05-15T10:00:00",
 						"endTime": "2024-05-17T11:00:00",
-						"timeZone": "Arab Standard Time"
+						"timeZone": "Arab Standard Time",
+						"schedule": {
+							"minutes": [
+								43
+							],
+							"hours": [
+								14
+							]
+						}
 					}
 				}
 			},
