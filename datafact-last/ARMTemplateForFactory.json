@@ -820,6 +820,12 @@
 						"startTime": "2024-05-14T14:35:00",
 						"timeZone": "Arab Standard Time",
 						"schedule": {
+							"minutes": [
+								38
+							],
+							"hours": [
+								14
+							],
 							"weekDays": [
 								"Wednesday"
 							]
