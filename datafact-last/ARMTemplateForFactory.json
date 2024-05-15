@@ -817,7 +817,7 @@
 					"recurrence": {
 						"frequency": "Week",
 						"interval": 1,
-						"startTime": "2024-05-15T11:32:00",
+						"startTime": "2024-05-14T14:35:00",
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"weekDays": [
