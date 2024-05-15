@@ -269,8 +269,6 @@
 						"name": "Delete posttype table",
 						"description": "Delete the posttype tables so that they are not repeated every time they are updated",
 						"type": "Delete",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -765,7 +763,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 5,
-						"startTime": "2024-05-16T10:00:00",
+						"startTime": "2024-05-17T10:00:00",
 						"endTime": "2024-05-17T11:00:00",
 						"timeZone": "Arab Standard Time"
 					}
