@@ -10,6 +10,12 @@
 					"referenceName": "copyOnceWeek",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "MASTER",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
@@ -21,10 +27,10 @@
 				"timeZone": "Arab Standard Time",
 				"schedule": {
 					"minutes": [
-						38
+						0
 					],
 					"hours": [
-						14
+						11
 					],
 					"weekDays": [
 						"Wednesday"
