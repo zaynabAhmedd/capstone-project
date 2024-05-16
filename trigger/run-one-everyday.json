@@ -28,10 +28,10 @@
 				"timeZone": "Arab Standard Time",
 				"schedule": {
 					"minutes": [
-						10
+						3
 					],
 					"hours": [
-						15
+						1
 					]
 				}
 			}
