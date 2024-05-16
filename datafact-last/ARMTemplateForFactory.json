@@ -875,14 +875,13 @@
 						"frequency": "Day",
 						"interval": 1,
 						"startTime": "2024-05-15T10:00:00",
-						"endTime": "2024-05-17T11:00:00",
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								10
+								5
 							],
 							"hours": [
-								15
+								1
 							]
 						}
 					}
