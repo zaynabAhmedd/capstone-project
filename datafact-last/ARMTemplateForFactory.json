@@ -742,54 +742,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "this will copy the data Every day in every 5 minutes",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "copyPostsEveryday",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "MASTER",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2024-05-15T10:00:00",
-						"endTime": "2024-05-17T11:00:00",
-						"timeZone": "Arab Standard Time",
-						"schedule": {
-							"minutes": [
-								10
-							],
-							"hours": [
-								15
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
-				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/run-everday')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -847,10 +799,10 @@
 								0
 							],
 							"hours": [
-								11
+								1
 							],
 							"weekDays": [
-								"Wednesday"
+								"Thursday"
 							]
 						}
 					}
@@ -892,6 +844,54 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "this will copy the data Every day in every 5 minutes",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyPostsEveryday",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "MASTER",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2024-05-15T10:00:00",
+						"endTime": "2024-05-17T11:00:00",
+						"timeZone": "Arab Standard Time",
+						"schedule": {
+							"minutes": [
+								10
+							],
+							"hours": [
+								15
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
+				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger-test')]",
