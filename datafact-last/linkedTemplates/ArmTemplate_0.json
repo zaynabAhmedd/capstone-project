@@ -877,10 +877,10 @@
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								6
+								10
 							],
 							"hours": [
-								1
+								13
 							],
 							"weekDays": [
 								"Thursday"
