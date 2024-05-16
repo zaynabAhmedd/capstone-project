@@ -927,10 +927,10 @@
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								5
+								11
 							],
 							"hours": [
-								1
+								13
 							]
 						}
 					}
