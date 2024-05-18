@@ -62,7 +62,6 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFileName": "*.parquet",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -128,8 +127,28 @@
 					"referenceName": "ls_db_ml_post",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": []
 			}
 		],
+		"parameters": {
+			"copytoPostFolder": {
+				"type": "string",
+				"defaultValue": "true"
+			},
+			"Post_today": {
+				"type": "string",
+				"defaultValue": "output1"
+			},
+			"archives": {
+				"type": "string",
+				"defaultValue": "output2"
+			}
+		},
 		"folder": {
 			"name": "capstone-project-pipelines"
 		},
