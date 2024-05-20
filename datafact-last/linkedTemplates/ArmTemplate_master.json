@@ -21,7 +21,7 @@
 		},
 		"ls_db_ml_post_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "0511-085359-y3wdvsrq"
+			"defaultValue": "0520-072415-9b2g5v84"
 		},
 		"ls_my_blob_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
