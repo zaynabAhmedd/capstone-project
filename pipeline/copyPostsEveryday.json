@@ -102,8 +102,7 @@
 				]
 			},
 			{
-				"name": "run ML Analysis",
-				"description": "run ML model on posts files",
+				"name": "Notebook1",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
