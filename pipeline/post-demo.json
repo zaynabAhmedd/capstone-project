@@ -228,7 +228,7 @@
 				}
 			},
 			{
-				"name": "Notebook1",
+				"name": "run ml",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
