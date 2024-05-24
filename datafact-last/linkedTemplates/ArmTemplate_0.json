@@ -219,6 +219,35 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Airflow2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Airflow",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US",
+						"computeSize": "Small",
+						"extraNodes": 0,
+						"enableAutoscale": false
+					},
+					"airflowProperties": {
+						"airflowVersion": "2.6.3",
+						"airflowEnvironmentVariables": null,
+						"airflowRequirements": [],
+						"enableAADIntegration": false,
+						"enableTriggerers": false,
+						"userName": "zaynab",
+						"password": null,
+						"airflowEntityReferences": [],
+						"encryptedSecrets": [],
+						"secrets": null
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Post_d')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -750,7 +779,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/post-demo')]",
+			"name": "[concat(parameters('factoryName'), '/copyPostsEveryday1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -987,7 +1016,7 @@
 						}
 					},
 					{
-						"name": "Notebook1",
+						"name": "run ml",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -1167,53 +1196,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]",
-				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "this will copy the data Every day in every 5 minutes",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "copyPostsEveryday",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "MASTER",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2024-05-15T10:00:00",
-						"timeZone": "Arab Standard Time",
-						"schedule": {
-							"minutes": [
-								11
-							],
-							"hours": [
-								13
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
 				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
 			]
 		}
