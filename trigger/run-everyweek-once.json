@@ -27,13 +27,13 @@
 				"timeZone": "Arab Standard Time",
 				"schedule": {
 					"minutes": [
-						14
+						45
 					],
 					"hours": [
-						13
+						22
 					],
 					"weekDays": [
-						"Thursday"
+						"Friday"
 					]
 				}
 			}
