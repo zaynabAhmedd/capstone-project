@@ -60,7 +60,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "copyOnceWeek",
+								"referenceName": "copyOnceWeek1",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -130,12 +130,12 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "capstone-project-pipelines"
+					"name": "After improvement"
 				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]"
+				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek1')]"
 			]
 		},
 		{
