@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "copyOnceWeek",
+						"referenceName": "copyOnceWeek1",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -76,7 +76,7 @@
 			}
 		],
 		"folder": {
-			"name": "capstone-project-pipelines"
+			"name": "After improvement"
 		},
 		"annotations": []
 	}
