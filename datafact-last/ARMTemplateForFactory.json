@@ -1198,33 +1198,6 @@
 								"parameters": {}
 							}
 						]
-					},
-					{
-						"name": "Notebook1",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "Copy post files",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/zaynab.alshhry@gmail.com/ML Sentiment Analysis"
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_db_ml_post",
-							"type": "LinkedServiceReference"
-						}
 					}
 				],
 				"policy": {
@@ -1238,7 +1211,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Post_d')]",
 				"[concat(variables('factoryId'), '/datasets/Posts_s')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_db_ml_post')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_my_blob')]"
 			]
 		},
@@ -1520,6 +1492,71 @@
 				"[concat(variables('factoryId'), '/linkedServices/ls_db_ml_post')]",
 				"[concat(variables('factoryId'), '/datasets/Post_d')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_my_blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute copy once week",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "copyOnceWeek",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Successful process",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Execute copy once week",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-32.eastus.logic.azure.com:443/workflows/af97c700002e4811bf4c7923b2713521/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=kWDMopVlacGOMhuNnYAtzyCruXzqqyfw9LnZ7E6Hk6U",
+							"body": {
+								"value": "{\n    \"title\": \"PIPELINE RUN FINISHED\",\n    \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY\",\n    \"color\": \"Green\",\n    \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"pipelineRunId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcnow()}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "capstone-project-pipelines"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek')]"
 			]
 		},
 		{
@@ -1994,6 +2031,7 @@
 					},
 					"airflowProperties": {
 						"airflowVersion": "2.6.3",
+						"airflowWebUrl": "https://599d5699341716.eastus.airflow.svc.datafactory.azure.com/login/",
 						"airflowEnvironmentVariables": null,
 						"airflowRequirements": [],
 						"enableAADIntegration": false,
