@@ -3,24 +3,32 @@
 	"properties": {
 		"description": "copy data once week",
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "copyOnceWeek1",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2024-05-09T13:40:00",
+				"startTime": "2024-05-27T10:00:00",
 				"timeZone": "Arab Standard Time",
 				"schedule": {
 					"minutes": [
-						40
+						5
 					],
 					"hours": [
-						13
+						10
 					],
 					"weekDays": [
-						"Thursday"
+						"Thursday",
+						"Monday"
 					]
 				}
 			}
