@@ -237,7 +237,6 @@
 					},
 					"airflowProperties": {
 						"airflowVersion": "2.6.3",
-						"airflowWebUrl": "https://599d5699341716.eastus.airflow.svc.datafactory.azure.com/login/",
 						"airflowEnvironmentVariables": null,
 						"airflowRequirements": [],
 						"enableAADIntegration": false,
