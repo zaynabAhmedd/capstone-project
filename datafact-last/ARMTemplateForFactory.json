@@ -779,17 +779,11 @@
 									}
 								},
 								{
-									"name": "If Condition1",
+									"name": "If Condition-users",
 									"type": "IfCondition",
 									"dependsOn": [
 										{
 											"activity": "Get Metadata from users",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										},
-										{
-											"activity": "Get Metadata from postType",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -803,7 +797,7 @@
 										},
 										"ifFalseActivities": [
 											{
-												"name": "Wait1",
+												"name": "Wait 2 min-users",
 												"type": "Wait",
 												"dependsOn": [],
 												"userProperties": [],
@@ -814,7 +808,7 @@
 										],
 										"ifTrueActivities": [
 											{
-												"name": "Set variable1",
+												"name": "Set variable-users-table",
 												"type": "SetVariable",
 												"dependsOn": [],
 												"policy": {
@@ -860,6 +854,52 @@
 										"formatSettings": {
 											"type": "DelimitedTextReadSettings"
 										}
+									}
+								},
+								{
+									"name": "If Condition-posttyp",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Get Metadata from postType",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@activity('Get Metadata from postType').output.exists",
+											"type": "Expression"
+										},
+										"ifFalseActivities": [
+											{
+												"name": "Wait 2 min-posttype",
+												"type": "Wait",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"waitTimeInSeconds": 120
+												}
+											}
+										],
+										"ifTrueActivities": [
+											{
+												"name": "Set variable-posttype-table",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"policy": {
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "FileAvailable",
+													"value": "True"
+												}
+											}
+										]
 									}
 								}
 							],
@@ -1221,7 +1261,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
+						"name": "Get Metadata",
 						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
@@ -1256,7 +1296,7 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Get Metadata1",
+								"activity": "Get Metadata",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1265,7 +1305,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@activity('Get Metadata1').output.exists",
+								"value": "@activity('Get Metadata').output.exists",
 								"type": "Expression"
 							},
 							"ifFalseActivities": [
@@ -1354,7 +1394,7 @@
 									"type": "Copy",
 									"dependsOn": [
 										{
-											"activity": "Delete1",
+											"activity": "Delete files from post local folder",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -1416,7 +1456,7 @@
 									]
 								},
 								{
-									"name": "Delete1",
+									"name": "Delete files from post local folder",
 									"type": "Delete",
 									"dependsOn": [],
 									"policy": {
@@ -1895,30 +1935,41 @@
 			"properties": {
 				"description": "copy data once week",
 				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyOnceWeek1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Week",
 						"interval": 1,
-						"startTime": "2024-05-09T13:40:00",
+						"startTime": "2024-05-27T10:00:00",
 						"timeZone": "Arab Standard Time",
 						"schedule": {
 							"minutes": [
-								40
+								5
 							],
 							"hours": [
-								13
+								10
 							],
 							"weekDays": [
-								"Thursday"
+								"Thursday",
+								"Monday"
 							]
 						}
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/copyOnceWeek1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",

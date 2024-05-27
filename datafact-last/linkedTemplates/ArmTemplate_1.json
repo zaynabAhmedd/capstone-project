@@ -13,132 +13,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/copyPostsEveryday')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "For this pipeline, will be used for copy daily Posts parquet files from WCD's public blob storage to our storage",
-				"activities": [
-					{
-						"name": "Delete post files",
-						"description": "Delete the post files so that they are not repeated every time they are updated",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "Post_d",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "ls_my_blob",
-									"type": "LinkedServiceReference"
-								},
-								"path": "bd-project/ExtractedData/delete"
-							},
-							"enableLogging": true,
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							}
-						}
-					},
-					{
-						"name": "Copy post files",
-						"description": "copy Posts parquet files from WCD's blob storage to our blob storage",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Delete post files",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ParquetSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.parquet",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "ParquetReadSettings"
-								}
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Posts_s",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Post_d",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "capstone-project-pipelines"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/copyPostsEveryday1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata1",
+						"name": "Get Metadata",
 						"type": "GetMetadata",
 						"dependsOn": [],
 						"policy": {
@@ -173,7 +54,7 @@
 						"type": "IfCondition",
 						"dependsOn": [
 							{
-								"activity": "Get Metadata1",
+								"activity": "Get Metadata",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -182,7 +63,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"expression": {
-								"value": "@activity('Get Metadata1').output.exists",
+								"value": "@activity('Get Metadata').output.exists",
 								"type": "Expression"
 							},
 							"ifFalseActivities": [
@@ -271,7 +152,7 @@
 									"type": "Copy",
 									"dependsOn": [
 										{
-											"activity": "Delete1",
+											"activity": "Delete files from post local folder",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -333,7 +214,7 @@
 									]
 								},
 								{
-									"name": "Delete1",
+									"name": "Delete files from post local folder",
 									"type": "Delete",
 									"dependsOn": [],
 									"policy": {
@@ -602,6 +483,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/run-once-week')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "copy data once week",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyOnceWeek1",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2024-05-27T10:00:00",
+						"timeZone": "Arab Standard Time",
+						"schedule": {
+							"minutes": [
+								5
+							],
+							"hours": [
+								10
+							],
+							"weekDays": [
+								"Thursday",
+								"Monday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/run-everyweek-once')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -693,7 +615,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
 				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
 			]
 		}
