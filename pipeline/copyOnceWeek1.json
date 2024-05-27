@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Until-1",
+				"name": "Until",
 				"description": "executes a set of activities in a loop until the condition associated with the activity evaluates to true.",
 				"type": "Until",
 				"dependsOn": [],
@@ -236,7 +236,7 @@
 				"type": "Delete",
 				"dependsOn": [
 					{
-						"activity": "Until-1",
+						"activity": "Until",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -334,7 +334,7 @@
 				"type": "Delete",
 				"dependsOn": [
 					{
-						"activity": "Until-1",
+						"activity": "Until",
 						"dependencyConditions": [
 							"Succeeded"
 						]
