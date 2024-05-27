@@ -46,17 +46,11 @@
 							}
 						},
 						{
-							"name": "If Condition1",
+							"name": "If Condition-users",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
 									"activity": "Get Metadata from users",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								},
-								{
-									"activity": "Get Metadata from postType",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -70,7 +64,7 @@
 								},
 								"ifFalseActivities": [
 									{
-										"name": "Wait1",
+										"name": "Wait 2 min-users",
 										"type": "Wait",
 										"dependsOn": [],
 										"userProperties": [],
@@ -81,7 +75,7 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Set variable1",
+										"name": "Set variable-users-table",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"policy": {
@@ -126,6 +120,52 @@
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
 								}
+							}
+						},
+						{
+							"name": "If Condition-posttyp",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Get Metadata from postType",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@activity('Get Metadata from postType').output.exists",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Wait 2 min-posttype",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 120
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Set variable-posttype-table",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"policy": {
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "FileAvailable",
+											"value": "True"
+										}
+									}
+								]
 							}
 						}
 					],
