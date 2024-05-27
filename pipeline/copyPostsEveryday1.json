@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Get Metadata",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -37,7 +37,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Get Metadata",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -133,7 +133,7 @@
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Delete1",
+									"activity": "Delete files from post local folder",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -193,7 +193,7 @@
 							]
 						},
 						{
-							"name": "Delete1",
+							"name": "Delete files from post local folder",
 							"type": "Delete",
 							"dependsOn": [],
 							"policy": {
