@@ -83,7 +83,7 @@
 									"type": "Copy",
 									"dependsOn": [
 										{
-											"activity": "Fail",
+											"activity": "Delete post files",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -144,6 +144,47 @@
 											"parameters": {}
 										}
 									]
+								},
+								{
+									"name": "Delete post files",
+									"description": "Delete the post files so that they are not repeated every time they are updated",
+									"type": "Delete",
+									"dependsOn": [
+										{
+											"activity": "Fail",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "Post_d",
+											"type": "DatasetReference",
+											"parameters": {}
+										},
+										"logStorageSettings": {
+											"linkedServiceName": {
+												"referenceName": "ls_my_blob",
+												"type": "LinkedServiceReference"
+											},
+											"path": "bd-project/ExtractedData/delete"
+										},
+										"enableLogging": true,
+										"storeSettings": {
+											"type": "AzureBlobStorageReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										}
+									}
 								}
 							],
 							"ifTrueActivities": [
@@ -524,6 +565,43 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "this will copy the data Every day in every 5 minutes",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "copyPostsEveryday",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2024-05-15T10:00:00",
+						"timeZone": "Arab Standard Time",
+						"schedule": {
+							"minutes": [
+								11
+							],
+							"hours": [
+								13
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/run-everyweek-once')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -563,52 +641,6 @@
 							],
 							"weekDays": [
 								"Friday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/run-one-everyday')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "this will copy the data Every day in every 5 minutes",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "copyPostsEveryday",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "MASTER",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2024-05-15T10:00:00",
-						"timeZone": "Arab Standard Time",
-						"schedule": {
-							"minutes": [
-								11
-							],
-							"hours": [
-								13
 							]
 						}
 					}

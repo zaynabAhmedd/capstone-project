@@ -1325,7 +1325,7 @@
 									"type": "Copy",
 									"dependsOn": [
 										{
-											"activity": "Fail",
+											"activity": "Delete post files",
 											"dependencyConditions": [
 												"Succeeded"
 											]
@@ -1386,6 +1386,47 @@
 											"parameters": {}
 										}
 									]
+								},
+								{
+									"name": "Delete post files",
+									"description": "Delete the post files so that they are not repeated every time they are updated",
+									"type": "Delete",
+									"dependsOn": [
+										{
+											"activity": "Fail",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataset": {
+											"referenceName": "Post_d",
+											"type": "DatasetReference",
+											"parameters": {}
+										},
+										"logStorageSettings": {
+											"linkedServiceName": {
+												"referenceName": "ls_my_blob",
+												"type": "LinkedServiceReference"
+											},
+											"path": "bd-project/ExtractedData/delete"
+										},
+										"enableLogging": true,
+										"storeSettings": {
+											"type": "AzureBlobStorageReadSettings",
+											"recursive": true,
+											"enablePartitionDiscovery": false
+										}
+									}
 								}
 							],
 							"ifTrueActivities": [
@@ -1986,13 +2027,6 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "MASTER",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -2014,8 +2048,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]",
-				"[concat(variables('factoryId'), '/pipelines/MASTER')]"
+				"[concat(variables('factoryId'), '/pipelines/copyPostsEveryday')]"
 			]
 		},
 		{
